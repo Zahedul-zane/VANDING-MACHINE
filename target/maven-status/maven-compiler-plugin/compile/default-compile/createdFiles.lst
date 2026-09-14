@@ -1,0 +1,11 @@
+com\vending\model\InsufficientFundsException.class
+com\vending\model\VendingMachine$Drink.class
+com\vending\model\VendingMachine.class
+com\vending\model\OutOfStockException.class
+com\vending\model\Inventory.class
+com\vending\model\VendingMachine$Snack.class
+com\vending\Launcher.class
+com\vending\model\VendingException.class
+com\vending\model\Product.class
+com\vending\VendingApp.class
+com\vending\ui\VendingController.class

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.vending.ui.VendingController" stylesheets="@style.css">
+    
+    <HBox spacing="20" styleClass="main-container">
+        <!-- Left: Product Grid -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <VBox spacing="0">
+                <Label text="ORION VENDING" styleClass="title" />
+                <Label text="PREMIUM REFRESHMENT SYSTEMS" style="-fx-text-fill: #555; -fx-font-size: 10; -fx-letter-spacing: 2;" />
+            </VBox>
+            
+            <Separator opacity="0.1" />
+            
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <FlowPane fx:id="productPane" hgap="25" vgap="25" prefWrapLength="700" />
+            </ScrollPane>
+        </VBox>
+    
+        <!-- Right: Control Panel -->
+        <VBox spacing="10" prefWidth="350" styleClass="card">
+            <!-- Main Display -->
+            <VBox spacing="5" styleClass="display-panel">
+                <Label text="SMART VENDING SYSTEM" style="-fx-text-fill: #444; -fx-font-size: 9;" />
+                <Label fx:id="mainDisplay" text="WELCOME" style="-fx-text-fill: #ffcc33; -fx-font-family: 'JetBrains Mono'; -fx-font-size: 16;" />
+                <Separator opacity="0.1" />
+                <HBox spacing="10">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="CREDIT" style="-fx-text-fill: #888; -fx-font-size: 9;" />
+                        <Label fx:id="balanceLabel" text="\$0.00" styleClass="balance-text" />
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS" alignment="TOP_RIGHT">
+                        <Label text="TOTAL DUE" style="-fx-text-fill: #888; -fx-font-size: 9;" />
+                        <Label fx:id="totalDueLabel" text="\$0.00" style="-fx-text-fill: #ffaa00; -fx-font-size: 20; -fx-font-family: 'JetBrains Mono';" />
+                    </VBox>
+                </HBox>
+            </VBox>
+    
+            <!-- Current Selection -->
+            <VBox spacing="5" style="-fx-background-color: rgba(0,0,0,0.3); -fx-padding: 10; -fx-background-radius: 5;">
+                <Label text="YOUR SELECTION" style="-fx-text-fill: #666; -fx-font-size: 10;" />
+                <ListView fx:id="selectionListView" prefHeight="100" styleClass="log-view" />
+            </VBox>
+    
+            <!-- Keypad Area (Numeric) -->
+            <VBox spacing="10" alignment="CENTER">
+                <Label text="NUMERIC INPUT" style="-fx-text-fill: #aaa; -fx-font-size: 10;" />
+                <GridPane hgap="5" vgap="5" alignment="CENTER">
+                    <Button text="1" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" />
+                    <Button text="2" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="1" />
+                    <Button text="3" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="2" />
+                    
+                    <Button text="4" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.rowIndex="1" />
+                    <Button text="5" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Button text="6" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    
+                    <Button text="7" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.rowIndex="2" />
+                    <Button text="8" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Button text="9" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    
+                    <Button text="CLR" onAction="#handleNumClear" styleClass="btn-secondary" prefWidth="60" style="-fx-text-fill: #ff4444;" GridPane.rowIndex="3" />
+                    <Button text="0" onAction="#handleNumKey" styleClass="btn-secondary" prefWidth="60" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Button text="OK" onAction="#handleNumOk" styleClass="btn-primary" prefWidth="60" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                </GridPane>
+            </VBox>
+    
+            <Button text="CHECKOUT &amp; VEND" onAction="#handleCheckout" styleClass="btn-primary" maxWidth="Infinity" prefHeight="45" />
+    
+            <!-- Quick Insert & Refund -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="REFUND" onAction="#handleRefund" styleClass="btn-secondary" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-text-fill: #ffaa00;" />
+                <Button text="COPY RECEIPT" onAction="#handleCopyReceipt" styleClass="btn-secondary" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            </HBox>
+    
+            <!-- Dispenser Tray -->
+            <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #050505; -fx-background-radius: 10; -fx-padding: 10;">
+                 <Label text="DISPENSER TRAY" style="-fx-text-fill: #333; -fx-font-size: 8;" />
+                 <HBox fx:id="dispenserTray" alignment="CENTER" spacing="10" prefHeight="50" style="-fx-border-color: #222; -fx-border-style: dashed; -fx-border-radius: 5;" />
+            </VBox>
+    
+            <!-- Receipt Slot -->
+            <VBox alignment="CENTER" spacing="5" style="-fx-background-color: #0c0c0c; -fx-background-radius: 10; -fx-padding: 10; -fx-border-color: #222; -fx-border-radius: 10;">
+                 <Label text="OFFICIAL RECEIPT DISPENSER" style="-fx-text-fill: #333; -fx-font-size: 9; -fx-font-weight: bold;" />
+                 <HBox fx:id="receiptSlot" onMouseClicked="#handleShowFloatingReceipt" alignment="CENTER" prefHeight="80" style="-fx-background-color: #050505; -fx-background-radius: 5; -fx-border-color: #111; -fx-border-style: solid; -fx-border-width: 3 0 0 0; -fx-cursor: hand;" />
+            </VBox>
+    
+            <ListView fx:id="logListView" VBox.vgrow="ALWAYS" styleClass="log-view" prefHeight="100" />
+        </VBox>
+    </HBox>
+
+    <!-- Floating Receipt Overlay -->
+    <StackPane fx:id="receiptOverlay" visible="false" style="-fx-background-color: rgba(0,0,0,0.85);">
+        <StackPane maxWidth="500" maxHeight="700">
+            <VBox fx:id="floatingReceiptContainer" alignment="CENTER" spacing="20">
+                <!-- Receipt content will be injected here -->
+            </VBox>
+            
+            <!-- Close 'X' Button -->
+            <Button onAction="#handleCloseFloatingReceipt" styleClass="btn-secondary" 
+                    StackPane.alignment="TOP_RIGHT" style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-padding: 5 10; -fx-font-weight: bold; -fx-background-radius: 20; -fx-min-width: 35; -fx-min-height: 35; -fx-translate-x: 15; -fx-translate-y: -15;">
+                <graphic>
+                    <FontIcon iconLiteral="fas-times" iconSize="16" iconColor="white" />
+                </graphic>
+            </Button>
+        </StackPane>
+    </StackPane>
+
+</StackPane>
